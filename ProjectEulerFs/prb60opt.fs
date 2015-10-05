@@ -1,6 +1,6 @@
 ﻿namespace Ochkin.ProjectEuler
 
-module prb60 =
+module prb60opt =
     open System.Linq
 
     type Set5 = int*int*int*int*int
@@ -23,16 +23,20 @@ module prb60 =
         if n < 2 then
             false
         else
-            let lastPrime = primes.Last()
-            if n <= lastPrime && 0 <= primes.BinarySearch(n) then
-                true
-            else
-                let sqrtn = n |> float |> sqrt |> int
-                let mutable next = lastPrime
-                while primes.Last() < sqrtn do
-                    next <- next + 2
-                    addIfPrime next
-                hasDivisors sqrtn n |> not
+            let mutable next = primes.Last()
+            while primes.Last() < n do
+                next <- next + 2
+                addIfPrime next
+            0 <= primes.BinarySearch(n)
+//            if n <= lastPrime && 0 <= primes.BinarySearch(n) then
+//                true
+//            else
+//                let sqrtn = n |> float |> sqrt |> int
+//                let mutable next = lastPrime
+//                while primes.Last() < sqrtn do
+//                    next <- next + 2
+//                    addIfPrime next
+//                hasDivisors sqrtn n |> not
 
     let nextSet (current : Set5) : Set5 =
         match current with
@@ -63,7 +67,7 @@ module prb60 =
         let mutable current = primes.Last()
         while primes.Count < n do
             current <- current + 2
-            addIfPrime current // check?
+            addIfPrime current
         primes.Item (n-1)
 
     let traverse5Prime : seq<Set5> =

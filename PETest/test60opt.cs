@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using problem60 = Ochkin.ProjectEuler.prb60opt;
 
 namespace PETest
 {
     [TestClass]
-    public class test60
+    public class test60opt
     {
         //[TestMethod]
         //public void TestHasDivisors()
@@ -23,21 +24,21 @@ namespace PETest
         [TestMethod]
         public void TestIsPrime()
         {
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isPrime(1));
+            Assert.IsFalse(problem60.isPrime(1));
 
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isPrime(5));
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isPrime(67));
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isPrime(83));
+            Assert.IsTrue(problem60.isPrime(5));
+            Assert.IsTrue(problem60.isPrime(67));
+            Assert.IsTrue(problem60.isPrime(83));
 
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isPrime(4));
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isPrime(49));
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isPrime(100));
+            Assert.IsFalse(problem60.isPrime(4));
+            Assert.IsFalse(problem60.isPrime(49));
+            Assert.IsFalse(problem60.isPrime(100));
         }
 
         [TestMethod]
         public void TestTraverse5N()
         {
-            var Ns = Ochkin.ProjectEuler.prb60.traverse5N(1, 2, 3, 4, 5);
+            var Ns = problem60.traverse5N(1, 2, 3, 4, 5);
             var actual = Ns.ElementAt(5);
             Assert.IsTrue(0 < actual.Item1);
             Assert.IsTrue(actual.Item1 < actual.Item2);
@@ -62,7 +63,7 @@ namespace PETest
         [TestMethod]
         public void TestTraverse5Prime()
         {
-            var a = Ochkin.ProjectEuler.prb60.traverse5Prime.ElementAt(25);
+            var a = problem60.traverse5Prime.ElementAt(25);
             Assert.IsTrue(isPrime(a.Item1));
             Assert.IsTrue(isPrime(a.Item2));
             Assert.IsTrue(isPrime(a.Item3));
@@ -73,30 +74,30 @@ namespace PETest
         [TestMethod]
         public void TestIsGoodPair()
         {
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isGoodPair(5, 100));
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isGoodPair(109, 673));
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isGoodPair(7, 3));
-            Assert.IsTrue(Ochkin.ProjectEuler.prb60.isGoodPair(3, 673));
+            Assert.IsFalse(problem60.isGoodPair(5, 100));
+            Assert.IsTrue(problem60.isGoodPair(109, 673));
+            Assert.IsTrue(problem60.isGoodPair(7, 3));
+            Assert.IsTrue(problem60.isGoodPair(3, 673));
         }
 
         [TestMethod]
         public void TestIsGoodSet()
         {
             //Assert.IsFalse(Ochkin.ProjectEuler.prb60.isGoodSet(Tuple.Create(3,7,109,673,1000)));
-            Assert.IsFalse(Ochkin.ProjectEuler.prb60.isGoodSet(3, 7, 109, 673, 1000));
+            Assert.IsFalse(problem60.isGoodSet(3, 7, 109, 673, 1000));
         }
 
         [TestMethod]
         public void TestConcatInt()
         {
-            Assert.AreEqual<int>(3456, Ochkin.ProjectEuler.prb60.concatInt(34, 56));
-            Assert.AreEqual<int>(5690, Ochkin.ProjectEuler.prb60.concatInt(56, 90));
+            Assert.AreEqual<int>(3456, problem60.concatInt(34, 56));
+            Assert.AreEqual<int>(5690, problem60.concatInt(56, 90));
         }
 
         [TestMethod]
         public void TestGetPrimeN()
         {
-            Assert.AreEqual(2, Ochkin.ProjectEuler.prb60.getPrimeN(1));
+            Assert.AreEqual(2, problem60.getPrimeN(1));
         }
     }
 }
