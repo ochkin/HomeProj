@@ -77,7 +77,7 @@ module prb60dp5 =
 
     let solve enough =
         prb60.traverse5N (1,2,3,4,5)
-        |> Seq.where checkGoodSet
+        |> Seq.filter checkGoodSet
         |> Seq.take enough
         |> Seq.map sumUp
         |> Seq.min

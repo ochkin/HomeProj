@@ -110,7 +110,7 @@ module prb60dp4 =
 
     let solve enough =
         traverse4N (1,2,3,4)
-        |> Seq.where checkGoodSet
+        |> Seq.filter checkGoodSet
         |> Seq.take enough
         |> Seq.map sumUp //(fun (a,b,c,d) -> a+b+c+d)
         |> Seq.min
