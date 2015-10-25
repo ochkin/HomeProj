@@ -2,8 +2,11 @@
 module ProjectEulerMain =
 
     [<EntryPoint>]
-    let main argv = 
-        printfn "%A" (prb60dp5.solve 1)
+    let main argv =
+        let start = System.DateTime.Now
+        printfn "%A" (prb60dp4.solve 1)
+        let finish = System.DateTime.Now
+        printfn "%A" (finish - start)
         //System.Console.WriteLine(prb60dp.test |> Seq.length)
 //        prb60dp.halfSurface
 //            |> Seq.take 20

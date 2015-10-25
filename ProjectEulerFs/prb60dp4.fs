@@ -31,36 +31,47 @@ module prb60dp4 =
             current <- current + 2
             addIfPrime current
         primes.Item n
-
+    let getDigits (n : int) =
+        if n < 0 then
+            -1
+        else
+            if 999999999 < n then
+                10
+            else
+                if 99999999 < n then
+                    9
+                else
+                    if 9999999 < n then
+                        8
+                    else
+                        if 999999 < n then
+                            7
+                        else
+                            if 99999 < n then
+                                6
+                            else
+                                if 9999 < n then
+                                    5
+                                else
+                                    if 999 < n then
+                                        4
+                                    else
+                                        if 99 < n then
+                                            3
+                                        else
+                                            if 9 < n then
+                                                2
+                                            else
+                                                1
     let concatInt (a:int) (b:int) =
         int ((string a) + (string b))
+//        let d = getDigits b
+//        b + a * (pown 10 (getDigits b))
     let isGoodPair (a: int) (b:int) =
         isPrime (concatInt a b) && isPrime (concatInt b a)
 
-    //let sum = new System.Collections.Generic.Dictionary<int,int>(CAPACITY)
-    //let count = new System.Collections.Generic.Dictionary<int,int>(CAPACITY)
-//    let addGoodPair i j =
-//        if sum.ContainsKey(i) |> not then
-//            count.Add(i, 1)
-//            sum.Add(i, primes.Item(i))
-//        count.Item(i) <- count.Item(i) + 1
-//        sum.Item(i) <- sum.Item(i) + primes.Item(j)
-//        count.Item(i)
-//    let naturals =
-//        Seq.initInfinite (fun i -> i)
-//    let halfSurface = seq {
-//        for i in naturals do
-//            yield! naturals.TakeWhile (fun j -> j < i) |> Seq.map (fun j -> (j, i))
-//        }
-//    let checkPair pair =
-//        if isGoodPair (getPrimeN (fst pair)) (getPrimeN (snd pair)) then
-//            let currentCnt = addGoodPair (fst pair) (snd pair)
-//            5 = currentCnt
-//        else
-//            false
     let goodPairs = new Dictionary<int * int, bool>(CAPACITY)
     let checkGoodPair (i1 : int, i2 : int) =
-        //let tuple = System.Tuple.Create(i1, i2)
         let tuple = (i1, i2)
         if goodPairs.ContainsKey(tuple) |> not then
             let a = getPrimeN i1
