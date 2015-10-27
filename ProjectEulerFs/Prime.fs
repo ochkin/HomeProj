@@ -38,7 +38,6 @@ let GetPrimeN n =
 
 
 // Sieve of Atkins
-//type number = uint32
 let rec BinarySearch target arr =
     match Array.length arr with
       | 0 -> None
@@ -47,19 +46,15 @@ let rec BinarySearch target arr =
                | 0  -> Some(target)
                | -1 -> BinarySearch target arr.[..middle-1]
                | _  -> BinarySearch target arr.[middle+1..]
-let ListAtkin (topCandidate : int) =
-//    let start = [2; 3; 5]
-    let sieve = Array.zeroCreate<bool> (topCandidate + 1)
-    Array.set sieve 2 true
-    Array.set sieve 3 true
-    Array.set sieve 5 true
-//    for n in 6 .. topCandidate do
-//        let r = n % 60
-//        match r with
-//            | 1 | 13 | 17 | 29 | 37 | 41 | 49 | 53 -> System.Console.WriteLine(1)
-//            | 7 | 19 | 31 | 43 -> System.Console.WriteLine(2)
-//            | 11 | 23 | 47 | 59 -> System.Console.WriteLine(3)
-    // 4x2 + y2
+
+let solutions1 topCandidate = seq {
+    for x2 in Seq.initInfinite (fun x -> 4 * x * x) |> Seq.skip 1 |> Seq.takeWhile (fun x2 -> x2 < topCandidate) do
+        yield! 1
+            |> Seq.unfold (fun i -> Some (i, i+2))
+            |> Seq.map (fun y -> x2 + y*y) 
+            |> Seq.takeWhile (fun n -> n <= topCandidate)
+    }
+let doFirst sieve topCandidate =
     let set1 = Set.ofList [1; 13; 17; 29; 37; 41; 49; 53]
     let mutable x = 1
     let mutable y = 1
@@ -77,13 +72,21 @@ let ListAtkin (topCandidate : int) =
             x <- x + 1
             x2 <- 4 * x * x
             if topCandidate < x2 + 1 then
-                go <- false
+                go <- false    
 
+let solutions2 topCandidate = seq {
+    for x2 in Seq.initInfinite (fun x -> 3 * x * x) |> Seq.skip 1 |> Seq.takeWhile (fun x2 -> x2 < topCandidate - 3) do
+        yield! 2
+            |> Seq.unfold (fun i -> Some (i, i+2))
+            |> Seq.map (fun y -> x2 + y*y) 
+            |> Seq.takeWhile (fun n -> n <= topCandidate)
+    }
+let doSecond sieve topCandidate =
     let set2 = Set.ofList [7; 19; 31; 43]
-    x <- 1
-    y <- 2
-    go <- true
-    x2 <- 3 * x * x
+    let mutable x = 1
+    let mutable y = 2
+    let mutable go = true
+    let mutable x2 = 3 * x * x
     while go do
         let n = x2 + y*y
         if n <= topCandidate then
@@ -98,11 +101,22 @@ let ListAtkin (topCandidate : int) =
             if topCandidate < x2 + 4 then
                 go <- false
 
+let solutions3 topCandidate = seq {
+    for (x, x2) in Seq.initInfinite (fun x -> x, x * x)
+        |> Seq.skip 2
+        |> Seq.takeWhile (fun (x, x2) -> 2*x2 - 2*x < topCandidate) do
+        yield! x - 1
+            |> Seq.unfold (fun y -> Some (y, y-2))
+            |> Seq.takeWhile (fun y -> 0 < y)
+            |> Seq.map (fun y -> 3 * x2 - y*y) 
+            |> Seq.takeWhile (fun n -> n <= topCandidate)
+    }
+let doThird sieve topCandidate =
     let set3 = Set.ofList [11; 23; 47; 59]
-    x <- 2
-    y <- x - 1
-    go <- true
-    x2 <- 3 * x * x
+    let mutable x = 2
+    let mutable y = x - 1
+    let mutable go = true
+    let mutable x2 = 3 * x * x
     while go do
         let n = x2 - y*y
         if n <= topCandidate && 0 < y then
@@ -117,29 +131,121 @@ let ListAtkin (topCandidate : int) =
             if topCandidate < x2 - y*y then
                 go <- false
 
-    //let sqrtTC = int( sqrt ( float ( topCandidate)))
-    //let squares1 = seq { for i in 7 .. topCandidate -> i * i } |> Seq.takeWhile (fun n -> n <= topCandidate)
+let initSieve topCandidate =
+    let result = Array.zeroCreate<bool> (topCandidate + 1)
+    Array.set result 2 true
+    Array.set result 3 true
+    Array.set result 5 true
+    result
+
+let removeSquares sieve topCandidate =
     let squares =
         seq { 7 .. topCandidate}
             |> Seq.filter (fun n -> Array.get sieve n)
             |> Seq.map (fun n -> n * n)
             |> Seq.takeWhile (fun n -> n <= topCandidate)
     for n2 in squares do
-//        if Array.get sieve n then
-//            let n2 = n * n
-//            let rec recN2 current =
-//                seq {
-//                    yield current
-//                    yield! recN2 (current + n2)
-//                 }
-            n2
-                |> Seq.unfold (fun state -> Some(state, state + n2))
-                |> Seq.takeWhile (fun x -> x <= topCandidate)
-                |> Seq.iter (fun x ->
-//                    if topCandidate < x then
-                    //printf "%d\n" x                
-                    Array.set sieve x false)
+        n2
+            |> Seq.unfold (fun state -> Some(state, state + n2))
+            |> Seq.takeWhile (fun x -> x <= topCandidate)
+            |> Seq.iter (fun x -> Array.set sieve x false)
 
+let pickPrimes sieve =
     sieve
         |> Array.mapi (fun i t -> if t then Some i else None)
         |> Array.choose (fun t -> t)
+
+// Sieve of Atkins (Synchronous)
+let ListAtkin (topCandidate : int) =
+    let sieve = initSieve topCandidate
+
+    doFirst sieve topCandidate
+    doSecond sieve topCandidate
+    doThird sieve topCandidate
+
+    removeSquares sieve topCandidate
+    pickPrimes sieve
+
+// Sieve of Atkins (Parallel Async)
+let ListAtkinP (topCandidate : int) =
+    let sieve = initSieve topCandidate
+
+    let doFirstA = async { doFirst sieve topCandidate }
+    let doSecondA = async { doSecond sieve topCandidate }
+    let doThirdA = async { doThird sieve topCandidate }
+
+    [doFirstA; doSecondA; doThirdA]
+        |> Async.Parallel
+        |> Async.RunSynchronously
+        |> ignore
+
+    removeSquares sieve topCandidate
+    pickPrimes sieve
+
+// Sieve of Atkin (TPL)
+open System.Threading.Tasks
+let ListAtkinTPL (topCandidate : int) =
+    let sieve = initSieve topCandidate
+    
+    let tasks = [doFirst; doSecond; doThird]
+    let result = Parallel.ForEach(tasks, fun task -> task sieve topCandidate)
+
+    removeSquares sieve topCandidate
+    pickPrimes sieve
+
+// Sieve of Atkin - Func, Sync
+let ListAtkinFunkSync (topCandidate : int) =
+    let sieve = initSieve topCandidate
+    
+    let doFirst0 sieve topCandidate =
+        let set1 = Set.ofList [1; 13; 17; 29; 37; 41; 49; 53]
+        solutions1 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set1)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    let doSecond0 sieve topCandidate =
+        let set2 = Set.ofList [7; 19; 31; 43]
+        solutions2 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set2)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    let doThird0 sieve topCandidate =
+        let set3 = Set.ofList [11; 23; 47; 59]
+        solutions3 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set3)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    doFirst0 sieve topCandidate
+    doSecond0 sieve topCandidate
+    doThird0 sieve topCandidate
+
+    removeSquares sieve topCandidate
+    pickPrimes sieve
+
+// Sieve of Atkin - Func, TPL
+let ListAtkinFunkTPL (topCandidate : int) =
+    let sieve = initSieve topCandidate
+    
+    let doFirst0 sieve topCandidate =
+        let set1 = Set.ofList [1; 13; 17; 29; 37; 41; 49; 53]
+        solutions1 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set1)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    let doSecond0 sieve topCandidate =
+        let set2 = Set.ofList [7; 19; 31; 43]
+        solutions2 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set2)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    let doThird0 sieve topCandidate =
+        let set3 = Set.ofList [11; 23; 47; 59]
+        solutions3 topCandidate
+            |> Seq.where (fun n -> Set.contains (n % 60) set3)
+            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
+
+    let tasks = [doFirst0; doSecond0; doThird0]
+    let result = Parallel.ForEach(tasks, fun task -> task sieve topCandidate)
+
+    removeSquares sieve topCandidate
+    pickPrimes sieve
