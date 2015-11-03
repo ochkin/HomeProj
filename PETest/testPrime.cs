@@ -61,27 +61,11 @@ namespace PETest
                 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859,
                 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991,
                 997 };
-            var primes = Prime.ListAtkin(1000);
-            //foreach (var candidate in candidates)
-            //    Assert.IsTrue( 0 <= Array.BinarySearch(primes, candidate));
-            Assert.AreEqual(primes.Length, candidates.Length);
-            for (int i = 0; i < primes.Length; i++)
-                Assert.AreEqual(candidates[i], primes[i]);
-
-            var primesP = Prime.ListAtkinP(1000);
-            Assert.AreEqual(primesP.Length, candidates.Length);
-            for (int i = 0; i < primesP.Length; i++)
-                Assert.AreEqual(candidates[i], primesP[i]);
 
             var primesTPL = Prime.ListAtkinTPL(1000);
             Assert.AreEqual(primesTPL.Length, candidates.Length);
             for (int i = 0; i < primesTPL.Length; i++)
                 Assert.AreEqual(candidates[i], primesTPL[i]);
-
-            //var primesPLinq = Prime.ListAtkinPLinq(1000);
-            //Assert.AreEqual(primesPLinq.Length, candidates.Length);
-            //for (int i = 0; i < primesPLinq.Length; i++)
-            //    Assert.AreEqual(candidates[i], primesPLinq[i]);
         }
 
         [TestMethod]
@@ -96,60 +80,16 @@ namespace PETest
             //end = DateTime.Now;
             //Assert.IsFalse(x);
             //Console.WriteLine("Time for classic = " + (end - start));
-
+            
             start = DateTime.Now;
-            var y = Prime.ListAtkin(topCandidate);
+            var y = Prime.ListAtkinTPL(topCandidate);
             end = DateTime.Now;
             Assert.IsTrue(
                Microsoft.FSharp.Core.FSharpOption<int>.get_IsNone(
                    Prime.BinarySearch(topCandidate - 1, y)
                    )
                );
-            Console.WriteLine("Time for Atkin - Sync = " + (end - start));
-
-            start = DateTime.Now;
-            var z = Prime.ListAtkinP(topCandidate);
-            end = DateTime.Now;
-            Assert.IsTrue(
-               Microsoft.FSharp.Core.FSharpOption<int>.get_IsNone(
-                   Prime.BinarySearch(topCandidate - 1, z)
-                   )
-               );
-            Assert.AreEqual(y.Length, z.Length);
-            Console.WriteLine("Time for Atkin - Parallel Async = " + (end - start));
-
-            start = DateTime.Now;
-            var z2 = Prime.ListAtkinTPL(topCandidate);
-            end = DateTime.Now;
-            Assert.IsTrue(
-               Microsoft.FSharp.Core.FSharpOption<int>.get_IsNone(
-                   Prime.BinarySearch(topCandidate - 1, z2)
-                   )
-               );
-            Assert.AreEqual(y.Length, z2.Length);
             Console.WriteLine("Time for Atkin - TPL = " + (end - start));
-
-            start = DateTime.Now;
-            var zFS = Prime.ListAtkinFunkSync(topCandidate);
-            end = DateTime.Now;
-            Assert.IsTrue(
-               Microsoft.FSharp.Core.FSharpOption<int>.get_IsNone(
-                   Prime.BinarySearch(topCandidate - 1, zFS)
-                   )
-               );
-            Assert.AreEqual(y.Length, zFS.Length);
-            Console.WriteLine("Time for Atkin - Functional Synchronous = " + (end - start));
-
-            start = DateTime.Now;
-            var zFtpl = Prime.ListAtkinFunkTPL(topCandidate);
-            end = DateTime.Now;
-            Assert.IsTrue(
-               Microsoft.FSharp.Core.FSharpOption<int>.get_IsNone(
-                   Prime.BinarySearch(topCandidate - 1, zFtpl)
-                   )
-               );
-            Assert.AreEqual(y.Length, zFtpl.Length);
-            Console.WriteLine("Time for Atkin - Functional TPL = " + (end - start));
 
             start = DateTime.Now;
             var zPub = Publish.ListAtkin(topCandidate);

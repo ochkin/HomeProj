@@ -155,96 +155,12 @@ let pickPrimes sieve =
         |> Array.mapi (fun i t -> if t then Some i else None)
         |> Array.choose (fun t -> t)
 
-// Sieve of Atkins (Synchronous)
-let ListAtkin (topCandidate : int) =
-    let sieve = initSieve topCandidate
-
-    doFirst sieve topCandidate
-    doSecond sieve topCandidate
-    doThird sieve topCandidate
-
-    removeSquares sieve topCandidate
-    pickPrimes sieve
-
-// Sieve of Atkins (Parallel Async)
-let ListAtkinP (topCandidate : int) =
-    let sieve = initSieve topCandidate
-
-    let doFirstA = async { doFirst sieve topCandidate }
-    let doSecondA = async { doSecond sieve topCandidate }
-    let doThirdA = async { doThird sieve topCandidate }
-
-    [doFirstA; doSecondA; doThirdA]
-        |> Async.Parallel
-        |> Async.RunSynchronously
-        |> ignore
-
-    removeSquares sieve topCandidate
-    pickPrimes sieve
-
 // Sieve of Atkin (TPL)
 open System.Threading.Tasks
 let ListAtkinTPL (topCandidate : int) =
     let sieve = initSieve topCandidate
     
     let tasks = [doFirst; doSecond; doThird]
-    let result = Parallel.ForEach(tasks, fun task -> task sieve topCandidate)
-
-    removeSquares sieve topCandidate
-    pickPrimes sieve
-
-// Sieve of Atkin - Func, Sync
-let ListAtkinFunkSync (topCandidate : int) =
-    let sieve = initSieve topCandidate
-    
-    let doFirst0 sieve topCandidate =
-        let set1 = Set.ofList [1; 13; 17; 29; 37; 41; 49; 53]
-        solutions1 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set1)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    let doSecond0 sieve topCandidate =
-        let set2 = Set.ofList [7; 19; 31; 43]
-        solutions2 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set2)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    let doThird0 sieve topCandidate =
-        let set3 = Set.ofList [11; 23; 47; 59]
-        solutions3 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set3)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    doFirst0 sieve topCandidate
-    doSecond0 sieve topCandidate
-    doThird0 sieve topCandidate
-
-    removeSquares sieve topCandidate
-    pickPrimes sieve
-
-// Sieve of Atkin - Func, TPL
-let ListAtkinFunkTPL (topCandidate : int) =
-    let sieve = initSieve topCandidate
-    
-    let doFirst0 sieve topCandidate =
-        let set1 = Set.ofList [1; 13; 17; 29; 37; 41; 49; 53]
-        solutions1 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set1)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    let doSecond0 sieve topCandidate =
-        let set2 = Set.ofList [7; 19; 31; 43]
-        solutions2 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set2)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    let doThird0 sieve topCandidate =
-        let set3 = Set.ofList [11; 23; 47; 59]
-        solutions3 topCandidate
-            |> Seq.where (fun n -> Set.contains (n % 60) set3)
-            |> Seq.iter (fun n ->  Array.get sieve n |> not |> Array.set sieve n)
-
-    let tasks = [doFirst0; doSecond0; doThird0]
     let result = Parallel.ForEach(tasks, fun task -> task sieve topCandidate)
 
     removeSquares sieve topCandidate

@@ -65,10 +65,8 @@
     </Content>
     <Compile Include="prb59.fs" />
     <Compile Include="Publish.fs" />
-    <Compile Include="prb60opt.fs" />
-    <Compile Include="prb60.fs" />
-    <Compile Include="prb60dp4.fs" />
     <Compile Include="prb60dp5.fs" />
+    <Compile Include="prb60On2.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

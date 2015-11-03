@@ -4,7 +4,7 @@ module ProjectEulerMain =
     [<EntryPoint>]
     let main argv =
         let start = System.DateTime.Now
-        printfn "%A" (prb60dp4.solve 1)
+        printfn "%A" (prb60On2.solve 5)
         let finish = System.DateTime.Now
         printfn "%A" (finish - start)
         //System.Console.WriteLine(prb60dp.test |> Seq.length)
