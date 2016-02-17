@@ -71,6 +71,7 @@
     <Compile Include="prb61.fs" />
     <Compile Include="prb62.fs" />
     <Compile Include="prb63.fs" />
+    <Compile Include="prb64.fs" />
     <None Include="poc.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
