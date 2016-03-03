@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <Tailcalls>false</Tailcalls>
+    <Tailcalls>true</Tailcalls>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
@@ -73,6 +73,8 @@
     <Compile Include="prb63.fs" />
     <Compile Include="prb64.fs" />
     <None Include="poc.fsx" />
+    <Compile Include="prb65.fs" />
+    <Compile Include="prb66.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
