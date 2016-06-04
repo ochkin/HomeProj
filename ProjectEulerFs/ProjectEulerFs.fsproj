@@ -75,11 +75,12 @@
     <None Include="poc.fsx" />
     <Compile Include="prb65.fs" />
     <Compile Include="prb66.fs" />
-    <Compile Include="prb67.fs" />
-    <Compile Include="Program.fs" />
     <Content Include="p067_triangle.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="prb67.fs" />
+    <Compile Include="prb68.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

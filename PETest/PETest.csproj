@@ -62,6 +62,7 @@
     <Compile Include="test62.cs" />
     <Compile Include="test65.cs" />
     <Compile Include="test66.cs" />
+    <Compile Include="test68.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectEulerFs\ProjectEulerFs.fsproj">
