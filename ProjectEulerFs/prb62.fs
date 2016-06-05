@@ -54,6 +54,5 @@ let solve (fake:int) : string =
         result
             |> Seq.map (Array.map (fun byte -> byte :> obj))
             |> Seq.map (fun objects -> System.String.Join("", objects))
-            //|> Seq.map (System.UInt32.Parse)
             |> Array.ofSeq
     System.String.Join(" ", numbers)

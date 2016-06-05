@@ -25,25 +25,37 @@ let findMax coprimeCount = coprimeCount
 
 let getAllPhi maxN =
     let coprimeCount = Array.zeroCreate <| maxN + 1
+    // 1
+    Array.set coprimeCount 1 1
+    // primes
     let primes = Prime.ListAtkinTPL maxN |> Set.ofArray
     for p in primes do
         Array.set coprimeCount p (p-1)
-    let nonPrimes = coprimeCount |> Seq.mapi (fun i cc -> i, cc) |> Seq.where (fun (i, cc) -> cc = 0) |> Seq.skip 2 |> Seq.map fst |> Array.ofSeq
-    for nonPrime in nonPrimes do
-        let rec getDivs number productPhi =
+    // non primes
+    let composeAndSetPhi n =
+        let rec getPhiFromDivs number productPhi =
             match number with
                 | 0 | 1 -> productPhi
-                | _ ->
-                    let findDiv = primes
-                                    |> Seq.takeWhile (fun pr -> pr <= number)
+                | prime when Set.contains prime primes -> (prime - 1) * productPhi
+                | _ ->                    
+                    let smallestDiv = primes
                                     |> Seq.where (fun pr -> number % pr = 0)
                                     |> Seq.head
-                    let generator state = if 0 <state && state % findDiv = 0 then Some(state, state / findDiv) else None
+                    let divide state = if 0 <state && state % smallestDiv = 0 then Some(state, state / smallestDiv) else None
                     let power = number
-                                |> Seq.unfold (generator)
+                                |> Seq.unfold divide
                                 |> Seq.length
-                    getDivs (number / (pown findDiv power)) ((pown findDiv (power - 1))*(findDiv - 1) * productPhi)
-        Array.set coprimeCount nonPrime <| getDivs nonPrime 1
+                    let dPowerM1 = pown smallestDiv (power - 1)
+                    let dPower = dPowerM1 * smallestDiv
+                    getPhiFromDivs (number / dPower) ((dPower - dPowerM1) * productPhi)
+        Array.set coprimeCount n <| getPhiFromDivs n 1
+    let nonPrimes = coprimeCount
+                    |> Seq.mapi (fun i cc -> i, cc)
+                    |> Seq.skip 2
+                    |> Seq.where (fun (i, cc) -> cc = 0)
+                    |> Seq.map fst
+    nonPrimes
+        |> PSeq.iter composeAndSetPhi
     coprimeCount
 
 let solve () =
