@@ -35,6 +35,7 @@ namespace PETest
         }
 
         [TestMethod]
+        [Ignore]
         public void testIntegration()
         {
             //foreach (var ring in prb68.result)
