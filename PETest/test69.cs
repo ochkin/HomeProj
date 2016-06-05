@@ -25,12 +25,5 @@ namespace PETest
             foreach (var pair in phi)
                 Assert.AreEqual(pair.Value, prb69.phi(pair.Key));
         }
-
-        [TestMethod]
-        public void testPhi2() // 1ms
-        {
-            foreach (var pair in phi)
-                Assert.AreEqual(pair.Value, prb69.phi2(pair.Key));
-        }
     }
 }
