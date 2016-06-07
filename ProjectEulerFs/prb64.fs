@@ -5,8 +5,8 @@ type Irrational =
     { r: Fraction<int>; i: Fraction<int> }
     override x.ToString() = sprintf "%A + sqrt * %A" x.r x.i
 
-let simplifyI ir =
-    { r = Util.simplify ir.r; i = Util.simplify ir.i}
+let simplifyI (ir: Irrational) =
+    { r = Simplify ir.r; i = Simplify ir.i}
 let IntegralPart lowerRange x =
     (x.r.numerator * x.i.denominator + lowerRange * x.i.numerator * x.r.denominator) / 
     (x.r.denominator * x.i.denominator)

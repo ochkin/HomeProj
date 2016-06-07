@@ -31,7 +31,7 @@ let findMinX2 D = //right solution
                 for an in infLoop otherA do
                     let cn = {
                         numerator= (bigint an) * cur.numerator + prev.numerator;
-                        denominator= (bigint an) *cur.denominator + prev.denominator } |> Util.simplify
+                        denominator= (bigint an) *cur.denominator + prev.denominator } |> Simplify
                     if (pown cn.numerator 2) - bigint D * (pown cn.denominator 2) = 1I then
                         yield cn.numerator
                     prev <- cur

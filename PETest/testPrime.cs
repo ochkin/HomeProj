@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace PETest
 {
@@ -101,8 +100,6 @@ namespace PETest
                );
             Assert.AreEqual(y.Length, zPub.Length);
             Console.WriteLine("Time for Atkin - Async again = " + (end - start));
-
-
         }
     }
 }
