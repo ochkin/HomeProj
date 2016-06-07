@@ -75,3 +75,6 @@ let inline compare a b =
 
 let inline max (a:Fraction<'T>) (b:Fraction<'T>) =
     if compare a b < 0 then b else a
+
+let inline hash x =
+    (269 * 47 + hash x.numerator) * 47 + hash x.denominator
