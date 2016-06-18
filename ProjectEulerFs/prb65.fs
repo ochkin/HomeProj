@@ -17,11 +17,11 @@ let convergents n =
 let simplify (fraction : Util.Fraction<bigint>) =
     let rec gcd a b =
         if a = 0I then b else gcd (b % a) a
-    let div = gcd (min fraction.numerator fraction.denominator) (max fraction.numerator fraction.denominator)
+    let div = gcd (min fraction.n fraction.d) (max fraction.n fraction.d)
     if 1I < div then
         {
-            Util.Fraction.numerator = fraction.numerator / div;
-            Util.Fraction.denominator = fraction.denominator / div
+            Util.Fraction.n = fraction.n / div;
+            Util.Fraction.d = fraction.d / div
         }
     else
         fraction
@@ -30,7 +30,7 @@ let simplify (fraction : Util.Fraction<bigint>) =
 // 2. add one
 // 3. simplify fraction
 let step (state: Util.Fraction<bigint>) (convergent: int) =
-    { Util.Fraction.numerator = state.numerator * (bigint convergent) + state.denominator; Util.Fraction.denominator = state.numerator}
+    { Util.Fraction.n = state.n * (bigint convergent) + state.d; Util.Fraction.d = state.n}
         |> simplify
 
 let solve () =
@@ -40,5 +40,5 @@ let solve () =
     let first = Seq.head c
     let f = c
             |> Seq.skip 1
-            |> Seq.fold step {numerator=bigint first; denominator=1I}
-    Util.sumOfDigits f.numerator
+            |> Seq.fold step {n=bigint first; d=1I}
+    Util.sumOfDigits f.n

@@ -8,22 +8,22 @@ type Irrational =
 let simplifyI (ir: Irrational) =
     { r = Simplify ir.r; i = Simplify ir.i}
 let IntegralPart lowerRange x =
-    (x.r.numerator * x.i.denominator + lowerRange * x.i.numerator * x.r.denominator) / 
-    (x.r.denominator * x.i.denominator)
+    (x.r.n * x.i.d + lowerRange * x.i.n * x.r.d) / 
+    (x.r.d * x.i.d)
 
-let x0 = { r={numerator=0; denominator=1}; i={numerator=1; denominator=1}}
+let x0 = { r={n=0; d=1}; i={n=1; d=1}}
 
 let invert rootBase ir =
-    let (a, b, c, d) = (ir.r.numerator, ir.r.denominator, ir.i.numerator, ir.i.denominator)
+    let (a, b, c, d) = (ir.r.n, ir.r.d, ir.i.n, ir.i.d)
     let den = rootBase * c * c * b * b - a * a * d * d
-    { r = {numerator = -a*b*d*d; denominator=den}; i = {numerator = b*b*c*d; denominator=den} }
+    { r = {n = -a*b*d*d; d=den}; i = {n = b*b*c*d; d=den} }
 
 let getSequence sq =
     let lowerRange = float sq |> sqrt |> int
     let rec findSequ4nce xs ints =
         let x = List.head xs
         let a = IntegralPart lowerRange x
-        let xMinusA = { r = {numerator = x.r.numerator - x.r.denominator * a; denominator = x.r.denominator} ; i = x.i}
+        let xMinusA = { r = {n = x.r.n - x.r.d * a; d = x.r.d} ; i = x.i}
         let inverted = xMinusA |> invert sq
         let xn =
             inverted

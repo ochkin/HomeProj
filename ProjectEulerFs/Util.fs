@@ -31,7 +31,7 @@ type Fraction<'T>=
 //                and 'T: (static member (/): 'T->'T->'T)
 //                and 'T: (static member (%): 'T->'T->'T)
 //                and 'T: (static member (*): 'T->'T->'T)> =
-    { numerator: 'T; denominator: 'T }
+    { n: 'T; d: 'T }
 //    member inline x.Simplied with get () : Fraction<'T> =
 //        Fraction.Simplify x
 //    override x.ToString () = "" // sprintf "%A/%A" x.numerator x.denominator
@@ -61,20 +61,20 @@ type Fraction<'T>=
 let inline Simplify fraction =
     let rec gcd a b =
         if LanguagePrimitives.GenericZero = a then b else gcd (b % a) a
-    let div = gcd (min fraction.numerator fraction.denominator) (max fraction.numerator fraction.denominator)
+    let div = gcd (min fraction.n fraction.d) (max fraction.n fraction.d)
     if LanguagePrimitives.GenericOne < div then
-        { numerator = fraction.numerator / div; denominator = fraction.denominator / div}
+        { n = fraction.n / div; d = fraction.d / div}
     else
         fraction
 
 let inline equal a b =
-    a.numerator * b.denominator = a.denominator * b.numerator
+    a.n * b.d = a.d * b.n
 
 let inline compare a b =
-    compare (a.numerator * b.denominator) (a.denominator * b.numerator)
+    compare (a.n * b.d) (a.d * b.n)
 
 let inline max (a:Fraction<'T>) (b:Fraction<'T>) =
     if compare a b < 0 then b else a
 
 let inline hash x =
-    (269 * 47 + hash x.numerator) * 47 + hash x.denominator
+    (269 * 47 + hash x.n) * 47 + hash x.d
