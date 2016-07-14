@@ -2,6 +2,29 @@
 open System
 open System.Threading
 
+let private Eat (x: Philosopher option) =
+    match x with
+      | Some philosopher ->
+        let l = philosopher.Left
+        let r = philosopher.Right
+        async {
+            try
+                if l.Take x && r.Take x then
+                    let time = int philosopher.EatingTime.TotalMilliseconds
+                    printfn "%s is eating for %A..." philosopher.Name time
+                    do! Async.Sleep time
+                    printfn "%s is done eating." philosopher.Name
+                    return true
+                else
+                    printfn "%s didn't get a fork :-(" philosopher.Name
+                    return false
+            finally
+                l.Release x
+                r.Release x
+        }
+      | None ->
+        failwith "Invlid operation. Empty philosopher."
+
 [<EntryPoint>]
 let main argv =
     let N = 5
@@ -11,19 +34,18 @@ let main argv =
             |> List.mapi (fun i pairOfForks -> new Philosopher("P"+i.ToString(),
                                                 fst pairOfForks,
                                                 snd pairOfForks,
-                                                TimeSpan.FromSeconds(3.0)))
+                                                TimeSpan.FromSeconds(10.0)))
+            |> List.map Some
     printfn "%i philosophers dining." (List.length philosophers)
-    use semaphor = new System.Threading.SemaphoreSlim(2, 2)
-    let runPhilosopher (person: Philosopher) = async  {
+    use semaphor = new FifoSemaphore<string>(2, 2)
+    let runPhilosopher (person: Philosopher option) = async  {
         while true do
-            do! (semaphor.WaitAsync() |> Async.AwaitTask)
-            do! (Async.Ignore (person.Eat()))
+            do! semaphor.WaitAsync(person.Value.Name)
+            do! Eat person |> Async.Ignore
             semaphor.Release() |> ignore
         }
-//    let token = new CancellationToken()
     philosophers |> Seq.map runPhilosopher |> Async.Parallel |> Async.Ignore |> Async.Start
-//    Async.Start(run, token)
+
     Console.ReadKey () |> ignore
     Async.CancelDefaultToken ()
-
-    0 // return an integer exit code
+    0

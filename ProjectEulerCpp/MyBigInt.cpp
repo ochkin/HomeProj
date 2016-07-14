@@ -150,9 +150,10 @@ string MyBigInt::ToString()
 unsigned long int MyBigInt::SumDigits()
 {
 	unsigned long int sum = 0;
-	for (auto i = this->data.begin(); i != this->data.end(); i++)
+	//for (auto i = this->data.begin(); i != this->data.end(); i++)
+	for (auto& value : this->data)
 	{
-		unsigned long int value = *i;
+		//unsigned long int value = *i;
 		while (0 < value )
 		{
 			sum += value % 10;

@@ -1694,7 +1694,7 @@ unsigned int problem52()
 unsigned int problem53()
 {
 	clock_t begin = clock();
-	long int before = GetTickCount();
+	auto before = GetTickCount64();
 	unsigned int summa = 0;
 	unsigned short int n = 23, k = 10;
 	unsigned long int Ckn = 1144066, LIMIT = 1000000, Ck_1n;
@@ -1717,7 +1717,7 @@ unsigned int problem53()
 		Ckn = (Ckn * n) / (n - k);
 	}
 	clock_t end = clock();
-	long int after = GetTickCount();
+	auto after = GetTickCount64();
 	cout << (double(end-begin) / CLOCKS_PER_SEC) << endl;
 	cout << (after - before) << endl;
 

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="FifoSemaphore.fs" />
     <None Include="App.config" />
     <Compile Include="Classes.fs" />
     <Compile Include="Program.fs" />
