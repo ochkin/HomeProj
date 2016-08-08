@@ -86,6 +86,7 @@
     <Compile Include="prb71.fs" />
     <Compile Include="prb72.fs" />
     <Compile Include="prb73.fs" />
+    <Compile Include="prb74.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

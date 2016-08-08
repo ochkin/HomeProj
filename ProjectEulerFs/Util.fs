@@ -22,41 +22,11 @@ let printSeq s =
         printf " %A" x
     printfn ""
 
+// fractions
 
-//[<CustomEquality; NoComparison>]
 type Fraction<'T>=
-// when 'T: comparison and 'T: equality
-//                and 'T: (static member get_Zero: unit->'T)
-//                and 'T: (static member get_One: unit->'T)
-//                and 'T: (static member (/): 'T->'T->'T)
-//                and 'T: (static member (%): 'T->'T->'T)
-//                and 'T: (static member (*): 'T->'T->'T)> =
     { n: 'T; d: 'T }
-//    member inline x.Simplied with get () : Fraction<'T> =
-//        Fraction.Simplify x
-//    override x.ToString () = "" // sprintf "%A/%A" x.numerator x.denominator
-//    member this.CompareTo other = 
-//                match other with
-//                | :? 'a as other -> compare value other
-//                | _ -> raise <| InvalidOperationException()
-//    override x.Equals yobj = 
-//        match yobj with
-//        | null -> false
-//        | sameRef when System.Object.ReferenceEquals(x, sameRef) -> true
-//        | diffHash when diffHash.GetHashCode() <> x.GetHashCode() -> false
-//        | :? Fraction<'T> as y ->
-//            let x_ = Fraction<'T>.Simplify x
-//            let y_ = Fraction<'T>.Simplify y
-            //x_.numerator = y_.numerator && x_.denominator = y_.denominator
-//        | _ -> false
-//    override x.GetHashCode() =
-//        (269 * 47 + hash x.numerator) * 47 + hash x.denominator
 
-//    interface System.IComparable with
-//      member x.CompareTo yobj = 
-//          match yobj with
-//          //| 😕 mything as y -> compare x.stamp y.stamp
-//          | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 let inline Simplify fraction =
     let rec gcd a b =
@@ -78,3 +48,13 @@ let inline max (a:Fraction<'T>) (b:Fraction<'T>) =
 
 let inline hash x =
     (269 * 47 + hash x.n) * 47 + hash x.d
+
+// maths
+
+let factorial n =
+    let rec loop n f =
+        if n = 1 then
+            f
+        else
+            loop (n-1) (f*n)
+    loop n 1
