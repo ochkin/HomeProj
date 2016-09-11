@@ -1,13 +1,9 @@
-﻿namespace Ochkin.ProjectEuler
+﻿#light "on"
+namespace Ochkin.ProjectEuler
 
 module prb56 =
     open System
     open System.Numerics
-
-    //let sumDigit (x : bigint) =
-    //    let str = x.ToString()
-    //    let digits = str.ToCharArray() |> List.ofArray |> List.map (fun (symbol : System.Char) -> (symbol - '0'))
-    //    digits
 
     let digsum b n =
         let rec loop acc = function

@@ -1,5 +1,4 @@
-﻿
-module ProjectEulerMain
+﻿module ProjectEulerMain
 
 [<EntryPoint>]
 let main argv =

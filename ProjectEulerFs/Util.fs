@@ -8,7 +8,6 @@ let numberOfDigits n =
 
 let sumOfDigits n =
     let rec go i s =
-        printfn "go %A %A" i s
         if i = 0I then
             s
         else
