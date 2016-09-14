@@ -189,4 +189,5 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 paket.exe
-*.VC.db
+*.VC.db*
+project.lock.json
