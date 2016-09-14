@@ -84,11 +84,6 @@
       <Project>{f46f1517-0861-4b6b-bbc4-6e93ce075bb8}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ProjectEulerFs\ProjectEulerFs.fsproj">
-      <Name>ProjectEulerFs</Name>
-      <Project>{5d740245-3624-400e-9638-7fdd3443083e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

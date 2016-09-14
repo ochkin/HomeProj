@@ -66,12 +66,6 @@
     <Compile Include="test69.cs" />
     <Compile Include="test70.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectEulerFs\ProjectEulerFs.fsproj">
-      <Project>{5d740245-3624-400e-9638-7fdd3443083e}</Project>
-      <Name>ProjectEulerFs</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
