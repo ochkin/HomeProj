@@ -6,6 +6,7 @@
     "compile": {
       "includeFiles": [
         "Prime.fs",
+        "Util.fs",
         "prb56.fs",
         "prb57.fs",
         "prb58.fs",
@@ -13,6 +14,14 @@
         "prb60dp5.fs",
         "prb60On2.fs",
         "prb61.fs",
+        "prb62.fs",
+        "prb63.fs",
+        "prb64.fs",
+        "prb65.fs",
+        "prb66.fs",
+        "prb67.fs",
+        "prb68.fs",
+        "prb69.fs",        
         "prb74.fs",
         "Publish.fs",
         "Program.fs"
@@ -20,7 +29,7 @@
     }
   },
   "dependencies": {
-    "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-160509"
+    "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-160831"
   },
   "tools": {
     "dotnet-compile-fsc": {

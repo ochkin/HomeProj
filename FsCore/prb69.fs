@@ -1,6 +1,6 @@
 ﻿module prb69
 
-open FSharp.Collections.ParallelSeq
+//open FSharp.Collections.ParallelSeq
 open System.Collections.Generic
 
 /// assume a < b
@@ -15,7 +15,6 @@ let phi n =
 //let maxN = 1000000
 //let solveNaive () =
 //    seq { 2 .. maxN } |> PSeq.maxBy (fun n -> float n / float (phi n))
-
 
 let findMax coprimeCount = coprimeCount
                             |> Seq.mapi (fun n phi -> n, float n / float phi)
@@ -55,7 +54,8 @@ let getAllPhi maxN =
                     |> Seq.where (fun (i, cc) -> cc = 0)
                     |> Seq.map fst
     nonPrimes
-        |> PSeq.iter composeAndSetPhi
+        // requires dependency "FSharp.Collections.ParallelSeq": "1.0.2"
+        |> (*P*)Seq.iter composeAndSetPhi
     coprimeCount
 
 let solve () =
