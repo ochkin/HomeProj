@@ -55,21 +55,9 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="Prime.fs" />
     <Compile Include="Util.fs" />
     <Content Include="paket.references" />
     <None Include="App.config" />
-    <Compile Include="prb56.fs" />
-    <Compile Include="prb57.fs" />
-    <Compile Include="prb58.fs" />
-    <Content Include="p059_cipher.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Compile Include="prb59.fs" />
-    <Compile Include="Publish.fs" />
-    <Compile Include="prb60dp5.fs" />
-    <Compile Include="prb60On2.fs" />
-    <Compile Include="prb61.fs" />
     <Compile Include="prb62.fs" />
     <Compile Include="prb63.fs" />
     <Compile Include="prb64.fs" />

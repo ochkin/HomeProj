@@ -5,7 +5,16 @@
     "compilerName": "fsc",
     "compile": {
       "includeFiles": [
+        "Prime.fs",
+        "prb56.fs",
+        "prb57.fs",
+        "prb58.fs",
+        "prb59.fs",
+        "prb60dp5.fs",
+        "prb60On2.fs",
+        "prb61.fs",
         "prb74.fs",
+        "Publish.fs",
         "Program.fs"
       ]
     }
@@ -29,7 +38,9 @@
         "Microsoft.NETCore.App": {
           "type": "platform",
           "version": "1.0.0"
-        }
+        },        
+        "System.Runtime.Numerics": "4.0.1",
+        "System.Runtime.Extensions": "4.1.0"
       },
       "imports": [
         "portable-net45+win8",

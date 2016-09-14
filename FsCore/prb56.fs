@@ -5,13 +5,13 @@ module prb56 =
     open System
     open System.Numerics
 
-    let digsum b n =
-        let rec loop acc = function
-            | n when n > 0 ->
-                let m, r = Math.DivRem(n, b)
-                loop (acc + r) m
-            | _ -> acc
-        loop 0 n
+    // let digsum b n =
+    //     let rec loop acc = function
+    //         | n when n > 0 ->
+    //             let m, r = Math.DivRem(n, b)
+    //             loop (acc + r) m
+    //         | _ -> acc
+    //     loop 0 n
 
     let sumDig (x : bigint) =
         let based = bigint(10)
@@ -33,10 +33,9 @@ module prb56 =
                     yield sumDig !current
             } |> Seq.max
 
-
     let Test56 =
-        let res1 = digsum 10 948736
-        printfn "digsum 10 948736 = %A" res1
+        // let res1 = digsum 10 948736
+        // printfn "digsum 10 948736 = %A" res1
         let res2 = sumDig 948736I
         printfn "sumDig 948736I = %A" res2
         let res3 = solve56
