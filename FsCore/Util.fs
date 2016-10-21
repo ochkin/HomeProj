@@ -24,29 +24,28 @@ let printSeq s =
 // fractions
 
 type Fraction<'T>=
-    { n: 'T; d: 'T }
-
+    { N: 'T; D: 'T }
 
 let inline Simplify fraction =
     let rec gcd a b =
         if LanguagePrimitives.GenericZero = a then b else gcd (b % a) a
-    let div = gcd (min fraction.n fraction.d) (max fraction.n fraction.d)
+    let div = gcd (min fraction.N fraction.D) (max fraction.N fraction.D)
     if LanguagePrimitives.GenericOne < div then
-        { n = fraction.n / div; d = fraction.d / div}
+        { N = fraction.N / div; D = fraction.D / div}
     else
         fraction
 
 let inline equal a b =
-    a.n * b.d = a.d * b.n
+    a.N * b.D = a.D * b.N
 
 let inline compare a b =
-    compare (a.n * b.d) (a.d * b.n)
+    compare (a.N * b.D) (a.D * b.N)
 
 let inline max (a:Fraction<'T>) (b:Fraction<'T>) =
     if compare a b < 0 then b else a
 
 let inline hash x =
-    (269 * 47 + hash x.n) * 47 + hash x.d
+    (269 * 47 + hash x.N) * 47 + hash x.D
 
 // maths
 
@@ -57,3 +56,13 @@ let factorial n =
         else
             loop (n-1) (f*n)
     loop n 1
+
+// algorithms
+
+let rec binarySearch a b (func: int64 -> int64) =
+    let c = (a + b) / 2L
+    match sign <| func c with
+    | 0 -> Some c
+    | -1 -> if a < c then binarySearch c b func else None
+    | +1 -> if c < b then binarySearch a c func else None
+    | _ -> failwith "invalid sign"

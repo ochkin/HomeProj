@@ -26,14 +26,14 @@ let findMinX2 D = //right solution
     let solutions = seq {
         match prb64.getSequence D |> snd |> List.rev with
             | a0 :: otherA ->                
-                let mutable prev = {n = 1I; d= 0I}
-                let mutable cur = {n = bigint a0; d = 1I}
+                let mutable prev = {N = 1I; D= 0I}
+                let mutable cur = {N = bigint a0; D = 1I}
                 for an in infLoop otherA do
                     let cn = {
-                        n= (bigint an) * cur.n + prev.n;
-                        d= (bigint an) *cur.d + prev.d } |> Simplify
-                    if (pown cn.n 2) - bigint D * (pown cn.d 2) = 1I then
-                        yield cn.n
+                        N= (bigint an) * cur.N + prev.N;
+                        D= (bigint an) *cur.D + prev.D } |> Simplify
+                    if (pown cn.N 2) - bigint D * (pown cn.D 2) = 1I then
+                        yield cn.N
                     prev <- cur
                     cur <- cn
             | [] -> invalidArg "D" "No solutions found."

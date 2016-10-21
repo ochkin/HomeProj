@@ -1,12 +1,12 @@
 ﻿module prb73
 
 open Util
-let left = { n=1UL; d=3UL}
-let right = { n=1UL; d=2UL}
+let left = { N=1UL; D=3UL}
+let right = { N=1UL; D=2UL}
 
 let solve () =
     seq {2UL .. 12000UL }
-        |> Seq.collect (fun d -> seq { 1UL + d/3UL .. (d-1UL)/2UL } |> Seq.map (fun n -> { n=n; d=d }))
+        |> Seq.collect (fun d -> seq { 1UL + d/3UL .. (d-1UL)/2UL } |> Seq.map (fun n -> { N=n; D=d }))
         |> Seq.where (fun f -> compare left f < 0 && compare f right < 0)
         |> Seq.map Simplify
         |> Seq.distinct
